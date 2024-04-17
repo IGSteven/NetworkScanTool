@@ -3,18 +3,18 @@ const bull = require('bull');
 const uuid = require('uuid')
 const ip = require("ip")
 const https = require('https')
-const isReachable = require('is-reachable')
-const isPortReachable = require('is-port-reachable')
+var tcpPortUsed = require('tcp-port-used');
+
+function isPortReachable (host, post) {
+    let test = tcpPortUsed.check(port, host).then(function() {
+        return true;
+    }, function(err) {
+        return false;
+    });
+}
 
 // Spawn Redis Queue
-class worker extends bull {
-    constructor(){
-        super('Tasks', redis = { port: process.env.REDIS_PORT, host: process.env.REDIS_HOST })
-        this.id = uuid.v4()
-        this.nodeip = ip.address()
-    }
-}
-let worker = new worker();
+let worker = new bull('Tasks', redis = { port: process.env.REDIS_PORT, host: process.env.REDIS_HOST });
 
 
 worker.process(function (task, done) {
@@ -27,8 +27,12 @@ worker.process(function (task, done) {
     switch(task.type.toLowerCase()){
         case 'port-test': {
             let test = isPortReachable(port, {host: host});
-            if (test) return done({ status: true, tester: nodeip, message: `$port is open at ${host}:${port}`});
-            if (!test) return done({ status: false, tester: nodeip, message: `port is closed at ${host}:${port}`});
+            if (test) result = { status: true, tester: nodeip, message: `$port is open at ${host}:${port}`}
+            if (!test) result = { status: false, tester: nodeip, message: `port is closed at ${host}:${port}`}
+
+            console.log(result);
+            return done(result);
+
         }
         case 'common-ports': {
             let test = {
@@ -57,3 +61,9 @@ worker.process(function (task, done) {
         default: return done(new Error('Task Failed'));
     }
 });
+
+
+
+
+// check
+worker.add({type: 'port-test', host: 'server.igsteven.com', port: 22 });

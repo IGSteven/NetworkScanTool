@@ -1,0 +1,26 @@
+{
+  "name": "networkscantool",
+  "version": "1.0.0",
+  "description": "Network Scan Tool for multiple services to help build firewall rules",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IGSteven/NetworkScanTool.git"
+  },
+  "author": "Steven Smith (@IGSteven)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/IGSteven/NetworkScanTool/issues"
+  },
+  "homepage": "https://github.com/IGSteven/NetworkScanTool#readme",
+  "dependencies": {
+    "bull": "^4.12.2",
+    "https": "^1.0.0",
+    "ip": "^2.0.1",
+    "tcp-port-used": "^1.0.2",
+    "uuid": "^9.0.1"
+  }
+}
