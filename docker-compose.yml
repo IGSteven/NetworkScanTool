@@ -4,7 +4,7 @@ services:
   worker:
     container_name: worker
     build:
-      context: .
+      context: ./DockerFile
     ports:
       - 3000:3000
     depends_on:
