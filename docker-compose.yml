@@ -9,7 +9,7 @@ services:
       - 3000:3000
     depends_on:
       - queue
-    enviroment:
+    environment:
       REDIS_HOST: queue
       REDIS_PORT: 6379
       REDIS_PASSWORD: ChangeMe
