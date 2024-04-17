@@ -16,7 +16,6 @@ function isPortReachable (host, post) {
 // Spawn Redis Queue
 let worker = new bull('Tasks', redis = { port: process.env.REDIS_PORT, host: process.env.REDIS_HOST });
 
-
 worker.process(function (task, done) {
     if (!task.target && !task.targets) return done(new Error('No Target Provided')); 
     if (task.targets) return done(new Error('Multi Target is currently not supported in this version.')) // Will add in future version to be able to scan whole subnets.
