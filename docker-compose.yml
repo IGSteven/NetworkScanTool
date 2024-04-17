@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   worker:
-    container_name: NetworkScanTool-wo
+    container_name: worker
     build:
       context: .
     ports:
@@ -14,6 +14,7 @@ services:
       REDIS_PORT: 6379
       REDIS_PASSWORD: ChangeMe
   queue:
+    container_name: queue
     image: redis:6.2-alpine
     restart: always
     ports:
